@@ -19,7 +19,7 @@ This repository contains the necessary files to run robots using Cartographer fo
 After cloning the repo, run the following commands on a laptop with Ubuntu 20.04 and ROS Noetic:
 ```bash
 roslaunch turtlebot_gazebo turtlebot3_house.launch
-roslaunch turtlebot_navigation turtlebot3_navigation_carto.launch map_file:=~/home_carto.yaml
+roslaunch turtlebot_navigation turtlebot3_navigation_carto.launch
 roslaunch turtlebot_bringup turtlebot3_remote_turtle_gazebo_nopb.launch
 
 
