@@ -1,0 +1,28 @@
+<launch>
+  <!-- Arguments -->
+  <arg name="map_file" default="$(find turtlebot3_navigation)/maps/map.yaml"/>
+  <arg name="open_rviz" default="true"/>
+  <arg name="move_forward_only" default="false"/>
+  <arg name="exploration" default="false"/>
+
+  <!-- Map Publishing Node for Exploration-->
+  <group if="$(arg exploration)">
+    <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros" type="cartographer_occupancy_grid_node" args="-resolution 0.01" />
+  </group>
+
+  <!-- Map server for Map-based Navigation-->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+
+
+
+  <!-- move_base -->
+  <include file="$(find turtlebot3_navigation)/launch/move_base_tortoise.launch">
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+  </include>
+
+  <!-- rviz -->
+  <group if="$(arg open_rviz)"> 
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find turtlebot3_navigation)/rviz/turtlebot3_navigation.rviz"/>
+  </group>
+</launch>

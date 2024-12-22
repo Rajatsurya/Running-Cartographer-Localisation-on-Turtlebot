@@ -1,0 +1,24 @@
+global_costmap:
+  global_frame: map
+  robot_base_frame: base_footprint
+
+  update_frequency: 10.0
+  publish_frequency: 10.0
+  transform_tolerance: 0.5
+
+  static_map: true
+
+  observation_sources: fake_obstacle
+  fake_obstacle:
+    data_type: LaserScan
+    topic: /fake_obstacle/visualization
+    observation_persistence: 0.0
+    expected_update_rate: 0.0
+    marking: true
+    clearing: true
+
+
+
+
+
+

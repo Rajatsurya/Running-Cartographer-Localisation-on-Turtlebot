@@ -1,0 +1,25 @@
+local_costmap:
+  global_frame: odom
+  robot_base_frame: base_footprint
+
+  update_frequency: 10.0
+  publish_frequency: 10.0
+  transform_tolerance: 0.5
+
+  static_map: true
+  rolling_window: true
+  width: 3
+  height: 3
+  resolution: 0.05
+
+  observation_sources: fake_obstacle
+  fake_obstacle:
+    data_type: LaserScan
+    topic: /fake_obstacle/visualization
+    observation_persistence: 0.0
+    expected_update_rate: 0.0
+    marking: true
+    clearing: true
+
+
+  

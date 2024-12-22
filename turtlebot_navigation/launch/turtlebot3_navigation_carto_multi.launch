@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+
+<launch>
+  <!-- Arguments -->
+  <arg name="move_forward_only" default="false"/>
+  <arg name="exploration" default="false"/>
+  <arg name="map_file" default="$(find turtlebot3_navigation)/maps/map.yaml"/>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+
+  <!-- <group ns="tb3_1"> -->
+  <!-- Turtlebot3 -->
+ <!--  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote_tb3_1.launch">
+    <arg name="model" value="$(arg model)" />
+  </include> -->
+  
+<group ns="tb3_1">
+  <!-- Map Publishing Node for Exploration-->
+  <group if="$(arg exploration)">
+    <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros" type="cartographer_occupancy_grid_node" args="-resolution 0.01" />
+  </group>
+  </group>
+
+  <!-- Map server for Map-based Navigation-->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" required="true"
+         args="-d $(find turtlebot3_nps)/rviz/two_tb3_one_map_twogoals.rviz"/>
+
+  <!-- move_base -->
+ <include file="$(find turtlebot3_nps)/launch/move_base_namespace.launch">
+    <arg name="robot_namespace" value="tb3_1"/>
+    <arg name="model" value="$(arg model)" />
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+   </include>
+
+</launch>
